@@ -10,6 +10,7 @@ from LogoutPage.LogoutPage_test import LogoutPage
 from ProductPage.ProductPage_test import ProductPage
 from CartPage.Cartpage_test import CartPage
 from CheckoutPage.CheckoutPage_test import CheckoutPage
+from config.config import Config, ConfigCheckout
 
 
 @pytest.fixture(scope="session")
@@ -25,7 +26,7 @@ def driver_setup():
 def login(driver_setup):
     driver = driver_setup
     login_page = LoginPage(driver)
-    login_page.login_url("https://www.saucedemo.com/")
+    login_page.login_url(Config.BaseUrl)
     return login_page
 
 
@@ -33,8 +34,8 @@ time.sleep(5)
 
 
 def test_login_page(login):
-    login.enter_username("standard_user")
-    login.enter_password("secret_sauce")
+    login.enter_username(Config.Username)
+    login.enter_password(Config.Password)
     login.enter_login()
 
 
@@ -53,9 +54,9 @@ def test_cart_page_automation(login):
 
 def test_checkout_page_automation(login):
     test_checkout_page = CheckoutPage(login.driver)
-    test_checkout_page.enter_first_name("John")
-    test_checkout_page.enter_last_name("Doe")
-    test_checkout_page.enter_zipcode("101011")
+    test_checkout_page.enter_first_name(ConfigCheckout.FirstName)
+    test_checkout_page.enter_last_name(ConfigCheckout.LastName)
+    test_checkout_page.enter_zipcode(ConfigCheckout.ZipCode)
     test_checkout_page.click_continue()
 
 
